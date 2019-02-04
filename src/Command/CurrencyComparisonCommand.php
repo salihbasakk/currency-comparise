@@ -21,7 +21,7 @@ class CurrencyComparisonCommand extends Command
 {
     public $adapterClass;
     public $providers = Provider::class;
-    public $provider = Provider::class;
+    public $provider  = Provider::class;
 
     protected static $defaultName = 'app:currency-comparison';
 
@@ -30,15 +30,26 @@ class CurrencyComparisonCommand extends Command
         $this
             // the short description shown while running "php bin/console list"
             ->setDescription('Comparise a currency.')
-
             // the full command description shown when running the command with
             // the "--help" option
-            ->setHelp('This command allows you to comparise a rates...')
-        ;
+            ->setHelp('This command allows you to comparise a rates...');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /**
+         * @var Provider[] $providers
+         */
+        $providers = [];
 
+        foreach ($providers as $index => $provider) {
+            $adapter = AdapterFactory::create($provider);
+            $exchangeRate = $adapter->process();
+            //@TODO:Save to DB
+            if ($index % 50 == 0) {
+                //Flush
+            }
+        }
+        //Flush
     }
 }

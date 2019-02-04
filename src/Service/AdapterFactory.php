@@ -8,29 +8,28 @@
 
 namespace App\Service;
 
+use App\Adapter\AbstractAdapter;
 use App\Entity\Provider;
-use Curl\Curl;
+use App\Requester\RequesterInterface;
 
 class AdapterFactory
 {
-    public $provider = Provider::class;
-    public $adapterClass;
-
-    public static function create(Provider $provider)
+    public static function create(Provider $provider): AbstractAdapter
     {
-        $prov = new Provider();
-        $adapterClass = $prov->getAdapterClass();
+        $adapterClass   = $provider->getAdapterClass();
+        $requesterClass = $provider->getRequesterClass();
 
-        if(is_subclass_of($adapterClass, ProviderAdapterInterface::class))
-        {
-            $providerClass = $prov->getAdapterClass();
-            $adapter = new $providerClass();
-            $curl = new Curl();
-            $curl->get($prov->getUrl());
-            $data =  json_decode($curl->response);
+        if (is_subclass_of($requesterClass, RequesterInterface::class)) {
+            $requesterClass = new $requesterClass();
+        }
 
-            $adapter->setUrl($prov->getUrl());
-            $adapter->setData($data);
+        if (is_subclass_of($adapterClass, AbstractAdapter::class)) {
+            /**
+             * @var AbstractAdapter $adapter
+             */
+            return new $adapterClass($requesterClass, $provider->getUrl());
+        } else {
+            throw new \Exception('Adapter class must extend AbstractAdapter');
         }
 
     }
