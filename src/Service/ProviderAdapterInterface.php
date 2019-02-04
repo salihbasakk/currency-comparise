@@ -9,7 +9,7 @@
 namespace App\Service;
 
 
-interface ProviderAdopterInterface
+interface ProviderAdapterInterface
 {
     public function parse(array $data):ExchangeRate;
 }

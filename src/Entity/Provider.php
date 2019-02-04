@@ -27,7 +27,7 @@ class Provider
     private $url;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $adapter_class;
 
@@ -65,7 +65,7 @@ class Provider
         return $this->adapter_class;
     }
 
-    public function setAdapterClass(string $adapter_class): self
+    public function setAdapterClass(?string $adapter_class): self
     {
         $this->adapter_class = $adapter_class;
 
