@@ -27,9 +27,14 @@ class Provider
     private $url;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true, name="adapter_class")
      */
-    private $adapter_class;
+    private $adapterClass;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true, name="requester_class")
+     */
+    private $requesterClass;
 
     public function getId(): ?int
     {
@@ -62,13 +67,32 @@ class Provider
 
     public function getAdapterClass(): ?string
     {
-        return $this->adapter_class;
+        return $this->adapterClass;
     }
 
-    public function setAdapterClass(string $adapter_class): self
+    public function setAdapterClass(?string $adapterClass): self
     {
-        $this->adapter_class = $adapter_class;
+        $this->adapterClass = $adapterClass;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRequesterClass()
+    {
+        return $this->requesterClass;
+    }
+
+    /**
+     * @param mixed $requesterClass
+     *
+     * @return Provider
+     */
+    public function setRequesterClass(?$requesterClass)
+    {
+        $this->requesterClass = $requesterClass;
         return $this;
     }
 }
