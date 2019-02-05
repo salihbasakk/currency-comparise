@@ -19,7 +19,7 @@ abstract class AbstractAdapter implements ProviderAdapterInterface
     protected $requester;
 
     /**
-     * @var string
+     * @var Provider
      */
     protected $provider;
 
@@ -27,7 +27,7 @@ abstract class AbstractAdapter implements ProviderAdapterInterface
      * AbstractAdapter constructor.
      *
      * @param RequesterInterface $requester
-     * @param string             $url
+     * @param Provider           $provider
      */
     public function __construct(RequesterInterface $requester, Provider $provider)
     {
