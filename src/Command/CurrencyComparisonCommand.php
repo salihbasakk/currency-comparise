@@ -10,16 +10,13 @@ namespace App\Command;
 
 use App\Entity\Provider;
 use App\Service\AdapterFactory;
-use App\Adapter\ProviderAdapterInterface;
-use Curl\Curl;
-use http\Env\Response;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CurrencyComparisonCommand extends Command
 {
-
     protected static $defaultName = 'app:currency-comparison';
 
     protected function configure()
@@ -34,6 +31,11 @@ class CurrencyComparisonCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var ContainerInterface $container */
+        $container = $this->getApplication()->getKernel()->getContainer();
+
+        $em = $container->get('doctrine.orm.default_entity_manager');
+
         /**
          * @var Provider[] $providers
          */
@@ -42,11 +44,9 @@ class CurrencyComparisonCommand extends Command
         foreach ($providers as $index => $provider) {
             $adapter = AdapterFactory::create($provider);
             $exchangeRate = $adapter->process();
-            //@TODO:Save to DB
-            if ($index % 50 == 0) {
-                //Flush
-            }
+            $em->persist($exchangeRate);
         }
-        //Flush
+
+        $em->flush();
     }
 }
