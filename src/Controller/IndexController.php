@@ -34,7 +34,7 @@ class IndexController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
 
         $company = new Company();
-        $company->setCompanyName('mocky1');
+        $company->setCompanyName('mocky1');0
         $company->setUsd($result1[0]->amount);
         $company->setEur($result1[1]->amount);
         $company->setGbp($result1[2]->amount);
