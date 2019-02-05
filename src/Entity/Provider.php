@@ -90,7 +90,7 @@ class Provider
      *
      * @return Provider
      */
-    public function setRequesterClass(?$requesterClass)
+    public function setRequesterClass(? string $requesterClass)
     {
         $this->requesterClass = $requesterClass;
         return $this;

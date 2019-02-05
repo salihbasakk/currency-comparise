@@ -27,7 +27,7 @@ class AdapterFactory
             /**
              * @var AbstractAdapter $adapter
              */
-            return new $adapterClass($requesterClass, $provider->getUrl());
+            return new $adapterClass($requesterClass, $provider);
         } else {
             throw new \Exception('Adapter class must extend AbstractAdapter');
         }

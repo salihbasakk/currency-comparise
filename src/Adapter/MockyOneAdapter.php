@@ -33,17 +33,14 @@ class MockyOneAdapter extends AbstractAdapter
         $exchangeRate->setEur($this->data[1]->amount);
         $exchangeRate->setGbp($this->data[2]->amount);
 
-        return ExchangeRate::class;
+        return $exchangeRate;
     }
 
     public function process(): ExchangeRate
     {
-        $this->url = $this->provider->getUrl();
+        $body = $this->requester->fetchData($this->provider->getUrl());
 
-        $this->requester = new HTTPRequester();
-        $this->data = $this->requester->fetchData($this->url);
-
-        json_decode($this->data, true);
+        $this->data = json_decode($body, true);
 
         return $this->parse($this->data);
     }
