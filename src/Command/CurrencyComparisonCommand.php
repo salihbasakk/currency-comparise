@@ -39,14 +39,13 @@ class CurrencyComparisonCommand extends Command
         /**
          * @var Provider[] $providers
          */
-        $providers = [];
+        $providers = $em->getRepository(Provider::class)->findAll();
 
-        foreach ($providers as $index => $provider) {
-            $adapter = AdapterFactory::create($provider);
-            $exchangeRate = $adapter->process();
+        foreach ($providers as $provider) {
+            $adapterClass = AdapterFactory::create($provider);
+            $exchangeRate = $adapterClass->process();
             $em->persist($exchangeRate);
         }
-
         $em->flush();
     }
 }
