@@ -8,6 +8,7 @@
 namespace App\Adapter;
 
 
+use App\Entity\Provider;
 use App\Requester\RequesterInterface;
 
 abstract class AbstractAdapter implements ProviderAdapterInterface
@@ -18,19 +19,19 @@ abstract class AbstractAdapter implements ProviderAdapterInterface
     protected $requester;
 
     /**
-     * @var string
+     * @var Provider
      */
-    protected $url;
+    protected $provider;
 
     /**
      * AbstractAdapter constructor.
      *
      * @param RequesterInterface $requester
-     * @param string             $url
+     * @param Provider           $provider
      */
-    public function __construct(RequesterInterface $requester, string $url)
+    public function __construct(RequesterInterface $requester, Provider $provider)
     {
         $this->requester = $requester;
-        $this->url       = $url;
+        $this->provider  = $provider;
     }
 }

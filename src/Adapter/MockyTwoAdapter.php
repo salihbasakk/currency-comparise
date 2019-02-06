@@ -12,7 +12,7 @@ namespace App\Adapter;
 use App\Entity\ExchangeRate;
 use App\Entity\Provider;
 
-class MockyOneAdapter extends AbstractAdapter
+class MockyTwoAdapter extends AbstractAdapter
 {
     /**
      * @var Provider $provider
@@ -23,10 +23,10 @@ class MockyOneAdapter extends AbstractAdapter
     {
         $exchangeRate = new ExchangeRate();
         $exchangeRate->setProviderId($this->provider->getId());
-        $exchangeRate->setUsd($data["result"][0]["amount"]);
-        $exchangeRate->setEur($data["result"][1]["amount"]);
-        $exchangeRate->setGbp($data["result"][2]["amount"]);
-
+        $exchangeRate->setUsd($data[0]["oran"]);
+        $exchangeRate->setEur($data[1]["oran"]);
+        $exchangeRate->setGbp($data[2]["oran"]);
+        var_dump($exchangeRate);die;
         return $exchangeRate;
     }
 

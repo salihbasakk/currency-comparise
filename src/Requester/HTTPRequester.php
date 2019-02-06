@@ -28,7 +28,7 @@ class HTTPRequester implements RequesterInterface
 
     public function fetchData(string $baseUrl): string
     {
-        $this->curlRequester->get($baseUrl);
-        return '';
+        $response = $this->curlRequester->get($baseUrl);
+        return $response->getResponse();
     }
 }
