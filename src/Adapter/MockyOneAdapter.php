@@ -33,7 +33,6 @@ class MockyOneAdapter extends AbstractAdapter
     public function process(): ExchangeRate
     {
         $body = $this->requester->fetchData($this->provider->getUrl());
-
         $data = json_decode($body,true);
 
         return $this->parse($data);

@@ -26,14 +26,13 @@ class MockyTwoAdapter extends AbstractAdapter
         $exchangeRate->setUsd($data[0]["oran"]);
         $exchangeRate->setEur($data[1]["oran"]);
         $exchangeRate->setGbp($data[2]["oran"]);
-        var_dump($exchangeRate);die;
+
         return $exchangeRate;
     }
 
     public function process(): ExchangeRate
     {
         $body = $this->requester->fetchData($this->provider->getUrl());
-
         $data = json_decode($body,true);
 
         return $this->parse($data);
