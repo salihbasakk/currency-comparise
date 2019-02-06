@@ -8,7 +8,9 @@
 
 namespace App\Controller;
 
+use App\Entity\ExchangeRate;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HomepageController extends AbstractController
 {
@@ -17,7 +19,20 @@ class HomepageController extends AbstractController
      */
     public function lowestRates()
     {
-        return $this->render('homepage/lowestRates.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $eur = $em->getRepository(ExchangeRate::class)->findOneBy([], ['eur'=>'asc']);
+        $usd = $em->getRepository(ExchangeRate::class)->findOneBy([], ['usd'=>'asc']);
+        $gbp = $em->getRepository(ExchangeRate::class)->findOneBy([], ['gbp'=>'asc']);
+
+        $eur = $eur->getEur();
+        $usd = $usd->getUsd();
+        $gbp = $gbp->getGbp();
+
+        return $this->render('homepage/lowestRates.html.twig', [
+            'eur' => $eur,
+            'usd' => $usd,
+            'gbp' => $gbp
+        ]);
     }
 }
 
